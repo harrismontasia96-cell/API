@@ -1,6 +1,6 @@
-package com.example.NorthwindTradersSpringboot.dao;
+package com.northwindtraders.dao;
 
-import com.example.NorthwindTradersSpringboot.models.Product;
+import com.northwindtraders.models.Product;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -19,14 +19,35 @@ public class SimpleProductDao implements ProductDao {
     }
 
     @Override
+    public List<Product> getAll() {
+        return products;
+    }
+
+    @Override
+    public Product getById(int id) {
+        return products.stream()
+                .filter(p -> p.getProductId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public void add(Product product) {
         products.add(product);
     }
 
     @Override
-    public List<Product> getAll() {
-        return products;
+    public void update(Product product) {
+        for (int i = 0; i < products.size(); i++) {
+            if (products.get(i).getProductId() == product.getProductId()) {
+                products.set(i, product);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        products.removeIf(p -> p.getProductId() == id);
     }
 }
-
-

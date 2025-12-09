@@ -1,35 +1,30 @@
-package com.example.NorthwindTradersSpringboot.models;
+package com.northwindtraders.models;
 
 public class Product {
-
     private int productId;
-    private String name;
+    private String productName;
     private String category;
     private double price;
 
-    public Product(int productId, String name, String category, double price) {
+    public Product() {}
+
+    public Product(int productId, String productName, String category, double price) {
         this.productId = productId;
-        this.name = name;
+        this.productName = productName;
         this.category = category;
         this.price = price;
     }
 
-    public int getProductId() {
-        return productId;
-    }
-    public String getName() {
-        return name;
-    }
-    public String getCategory() {
-        return category;
-    }
-    public double getPrice() {
-        return price;
-    }
+    // getters & setters
+    public int getProductId() { return productId; }
+    public void setProductId(int productId) { this.productId = productId; }
 
-    @Override
-    public String toString() {
-        return productId + " | " + name + " | " + category + " | $" + price;
-    }
+    public String getProductName() { return productName; }
+    public void setProductName(String productName) { this.productName = productName; }
+
+    public String getCategory() { return category; }
+    public void setCategory(String category) { this.category = category; }
+
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
 }
-

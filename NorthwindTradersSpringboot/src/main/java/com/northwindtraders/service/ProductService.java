@@ -11,7 +11,7 @@ public class ProductService {
 
     @Autowired
     public ProductService(ProductDao productDao) {
-        this.productDao = productDao; // Spring will pick JdbcProductDao by default
+        this.productDao = productDao;
     }
 
     public void printAllProducts() {

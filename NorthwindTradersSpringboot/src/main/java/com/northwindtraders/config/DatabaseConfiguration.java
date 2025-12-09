@@ -7,30 +7,31 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 
-    @Configuration
-    public class DatabaseConfiguration {
+@Configuration
+public class DatabaseConfiguration {
 
-        @Value("${northwind.connectionUrl}")
-        private String connectionUrl;
+    @Value("${northwind.connectionUrl}")
+    private String connectionUrl;
 
-        @Value("${northwind.username}")
-        private String username;
+    @Value("${northwind.username}")
+    private String username;
 
-        @Value("${northwind.password}")
-        private String password;
+    @Value("${northwind.password}")
+    private String password;
 
-        @Bean
-        public DataSource dataSource() {
-            BasicDataSource dataSource = new BasicDataSource();
-            dataSource.setUrl(connectionUrl);
-            dataSource.setUsername(username);
-            dataSource.setPassword(password);
+    @Bean
+    public DataSource dataSource() {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setUrl(connectionUrl);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
 
-            // Optional: tuning the pool
-            dataSource.setInitialSize(5);
-            dataSource.setMaxTotal(10);
+        // REQUIRED for MySQL
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-            return dataSource;
-        }
+        dataSource.setInitialSize(5);
+        dataSource.setMaxTotal(10);
+
+        return dataSource;
     }
-
+}

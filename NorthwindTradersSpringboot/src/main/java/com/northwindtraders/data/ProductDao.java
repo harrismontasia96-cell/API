@@ -1,4 +1,6 @@
-package com.example.NorthwindTradersSpringboot.dao;
+package com.northwindtraders.data;
+
+
 
 import com.example.NorthwindTradersSpringboot.models.Product;
 import java.util.List;

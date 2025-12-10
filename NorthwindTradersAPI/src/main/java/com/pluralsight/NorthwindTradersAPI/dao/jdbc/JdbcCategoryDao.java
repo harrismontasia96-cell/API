@@ -1,4 +1,5 @@
 package com.pluralsight.NorthwindTradersAPI.dao.jdbc;
+
 import com.pluralsight.NorthwindTradersAPI.dao.CategoryDao;
 import com.pluralsight.NorthwindTradersAPI.models.Category;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,6 @@ public class JdbcCategoryDao implements CategoryDao {
     @Override
     public List<Category> getAll() {
         List<Category> categories = new ArrayList<>();
-
         String sql = "SELECT CategoryID, CategoryName FROM categories";
 
         try (Connection conn = dataSource.getConnection();
@@ -28,42 +28,62 @@ public class JdbcCategoryDao implements CategoryDao {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Category c = new Category(
+                categories.add(new Category(
                         rs.getInt("CategoryID"),
                         rs.getString("CategoryName")
-                );
-                categories.add(c);
+                ));
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-
         return categories;
     }
 
     @Override
     public Category getById(int id) {
         String sql = "SELECT CategoryID, CategoryName FROM categories WHERE CategoryID = ?";
-
         try (Connection conn = dataSource.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
 
-            try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return new Category(
+                        rs.getInt("CategoryID"),
+                        rs.getString("CategoryName")
+                );
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Category insert(Category category) {
+        String sql = "INSERT INTO categories (CategoryName) VALUES (?)";
+
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, category.getCategoryName());
+            stmt.executeUpdate();
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (rs.next()) {
-                    return new Category(
-                            rs.getInt("CategoryID"),
-                            rs.getString("CategoryName")
-                    );
+                    category.setCategoryId(rs.getInt(1));
                 }
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         }
 
-        return null;
+        return category;
     }
 }
+

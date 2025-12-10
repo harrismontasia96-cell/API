@@ -13,20 +13,15 @@ public class Product {
         this.unitPrice = unitPrice;
     }
 
-    public int getProductId() {
-        return productId;
-    }
 
-    public String getProductName() {
-        return productName;
-    }
+    public int getProductId() { return productId; }
+    public String getProductName() { return productName; }
+    public int getCategoryId() { return categoryId; }
+    public double getUnitPrice() { return unitPrice; }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
 
-    public double getUnitPrice() {
-        return unitPrice;
-    }
+    public void setProductId(int productId) { this.productId = productId; }
+    public void setProductName(String productName) { this.productName = productName; }
+    public void setCategoryId(int categoryId) { this.categoryId = categoryId; }
+    public void setUnitPrice(double unitPrice) { this.unitPrice = unitPrice; }
 }
-
